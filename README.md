@@ -28,3 +28,38 @@ La aplicación estará disponible en [http://localhost:8000](http://localhost:80
 - Si se requieren configuraciones especiales para el entorno LAMP, inclúyelas en este archivo.
 - Para lanzar la aplicación en producción, configura el servidor Apache con el VirtualHost correspondiente y ajusta las variables de entorno en el archivo `.env`.
 
+# Documentación de la API Mastermind
+
+Esta API permite gestionar partidas y jugadas para el juego Mastermind.
+
+## Endpoints Principales
+
+### 1. Listar Partidas
+- **Método:** GET  
+- **URL:** `{{baseUrl}}/api/games`  
+- **Descripción:** Devuelve una lista de partidas en curso (el código secreto se oculta).
+
+### 2. Detalle de una Partida
+- **Método:** GET  
+- **URL:** `{{baseUrl}}/api/games/{{id}}`  
+- **Descripción:** Devuelve los detalles de una partida, incluyendo los movimientos realizados.
+
+### 3. Crear una Nueva Partida
+- **Método:** POST  
+- **URL:** `{{baseUrl}}/api/games`  
+- **Body (JSON):**
+  ```json
+  {
+      "name": "Partida de Prueba"
+  }
+
+### 4. Enviar un Movimiento
+
+- **Método:** `POST`
+- **URL:** `{{baseUrl}}/api/games/{{gameId}}/move`
+- **Descripción:** Envía una jugada. El servidor evalúa la jugada, actualiza el estado de la partida (se marca como "victory" si se acierta la jugada o "defeat" si se alcanzan 10 intentos) y devuelve el resultado, indicando el número de aciertos exactos y parciales, así como la cantidad de jugadas restantes.
+- **Body (JSON):** 
+  ```json
+  {
+      "code": ["rojo", "azul", "verde", "amarillo"]
+  }
