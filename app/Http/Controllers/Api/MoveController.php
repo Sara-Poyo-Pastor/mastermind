@@ -11,45 +11,34 @@ class MoveController extends Controller
 {
     public function store(Request $request, $gameId)
     {
-        // Buscar la partida; si no existe se lanza 404
         $game = Game::findOrFail($gameId);
 
-        // Verificar que la partida esté en curso
         if ($game->status !== 'in_progress') {
             return response()->json(['error' => 'El juego ya ha finalizado'], 400);
         }
 
-        // Validar la jugada: se espera un arreglo de 4 colores permitidos
         $data = $request->validate([
             'code' => 'required|array|size:4',
-            // Aquí incluimos tanto los nombres en inglés como en castellano, si es necesario
             'code.*' => 'required|string|in:red,blue,green,yellow,orange,purple,rojo,azul,verde,amarillo,naranja,morado'
         ]);
 
         $codeProposed = $data['code'];
 
-        // Verificar que no se repitan colores en la jugada
         if (count($codeProposed) !== count(array_unique($codeProposed))) {
             return response()->json(['error' => 'No se permiten colores duplicados en la jugada'], 400);
         }
 
-        // Evaluar la jugada comparándola con el código secreto almacenado en la partida
         $evaluation = $this->evaluateGuess($game->code, $codeProposed);
 
-        // Crear el movimiento: 
-        // Convertimos los arrays a JSON manualmente, ya que MySQL usa longtext (no nativo JSON).
+        // Convierte los arrays a JSON manualmente, ya que MySQL usa longtext (no nativo JSON)
         $move = Move::create([
             'game_id'       => $game->id,
             'guessed_colors'=> json_encode($codeProposed),
             'evaluation'    => json_encode($evaluation)
         ]);
 
-        // Contabilizar el número de movimientos realizados usando una consulta directa
         $movesCount = Move::where('game_id', $game->id)->count();
 
-        // Actualizar el estado del juego:
-        // Si la jugada es perfecta (4 exactos), se marca como "victory"
-        // Si se han realizado 10 o más jugadas sin ganar, se marca como "defeat"
         if ($evaluation['exact'] == 4) {
             $game->status = 'victory';
         } elseif ($movesCount >= 10) {
@@ -57,7 +46,6 @@ class MoveController extends Controller
         }
         $game->save();
 
-        // Devolver la respuesta decodificando los datos almacenados en JSON
         return response()->json([
             'move' => [
                 'id'             => $move->id,
@@ -71,8 +59,7 @@ class MoveController extends Controller
         ], 201);
     }
 
-    // Evalúa la jugada comparando el código secreto con la suposición del jugador.
-    // Retorna un array con:
+
     // 'exact'   => número de colores en la posición correcta,
     // 'partial' => número de colores correctos pero en posición incorrecta.
     private function evaluateGuess(array $secret, array $guess)
