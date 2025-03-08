@@ -1,36 +1,33 @@
 # README.md
 
-## Requisitos
+## Requisitos Previos
 
-- PHP >= 7.4
-- Composer
-- MySQL o MariaDB
-- Apache (u otro servidor web compatible con PHP)
+- **Servidor Web:** Apache  
+- **Sistema Operativo:** Windows (o similar)  
+- **PHP:** Versión 8.x (preferiblemente 8.1 o superior)  
+- **Base de Datos:** MySQL  
+- **Composer:** Para la gestión de dependencias  
+- **Git:** (Opcional) Para clonar el repositorio
 
 ## Pasos para la Instalación
 
-1. Clona el repositorio o extrae el archivo comprimido en tu servidor.
+1. Clona el repositorio o extrae el archivo comprimido en tu servidor. https://github.com/Sara-Poyo-Pastor/mastermind.git
 2. Ejecuta el comando `composer install` para instalar las dependencias.
-3. Copia el archivo `.env.example` a `.env` y configura la conexión a la base de datos.
-4. Genera la clave de la aplicación con:  
-   `php artisan key:generate`
-5. Ejecuta las migraciones para crear las tablas necesarias:  
+3. En el archivo`.env` configura la conexión a la base de datos.
+4. Ejecuta las migraciones para crear las tablas necesarias:  
    `php artisan migrate`
-6. (Opcional) Ejecuta los tests para verificar la funcionalidad:  
+5. (Opcional) Ejecuta los tests para verificar la funcionalidad:  
    `php artisan test`
-7. Inicia el servidor de desarrollo:  
+6. Inicia el servidor de desarrollo:  
    `php artisan serve`
 
-La aplicación estará disponible en [http://localhost:8000](http://localhost:8000).
+La aplicación estará disponible en [http://127.0.0.1:8000](http://localhost:8000).
 
-## Notas Adicionales
-
-- Si se requieren configuraciones especiales para el entorno LAMP, inclúyelas en este archivo.
-- Para lanzar la aplicación en producción, configura el servidor Apache con el VirtualHost correspondiente y ajusta las variables de entorno en el archivo `.env`.
 
 # Documentación de la API Mastermind
 
 Esta API permite gestionar partidas y jugadas para el juego Mastermind.
+Se adjunta un documento en formato json (Mastermind-API.postman_collection.json) con la documentación completa de la API.
 
 ## Endpoints Principales
 
