@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Game;
 
 class GameController extends Controller
 {
-    // Mostrar todos los juegos 
+    // Lista todas las partidas (oculta el código secreto)
     public function index()
     {
         $games = Game::with('moves')->get();
-        $games->each(function($game) {
-            unset($game->code);
+        $games->each(function ($game) {
+            $game->makeHidden('code');
         });
         return response()->json($games);
     }
 
-    // Mostrar los detalles de un juego
+    // Muestra los detalles de una partida (incluye los movimientos, sin el código secreto)
     public function show($id)
     {
         $game = Game::with('moves')->findOrFail($id);
@@ -25,23 +26,28 @@ class GameController extends Controller
         return response()->json($game);
     }
 
-    // Crear un nuevo juego
+    // Crea una nueva partida: recibe opcionalmente un nombre, genera un código secreto y devuelve la partida sin revelar el código
     public function store(Request $request)
     {
         $name = $request->input('name', 'Unnamed Game');
         $code = $this->generateSecretCode();
+
         $game = Game::create([
-            'name' => $name,
-            'code' => $code,
+            'name'   => $name,
+            'code'   => $code,
             'status' => 'in_progress'
         ]);
+
+        // Ocultar el código secreto antes de devolver la respuesta
+        $game->makeHidden('code');
+
         return response()->json($game, 201);
     }
 
-    // Genera un código secreto aleatorio
+    // Método auxiliar para generar un código secreto de 4 colores sin repetición
     private function generateSecretCode()
     {
-        $colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple'];
+        $colors = ['rojo', 'azul', 'verde', 'amarillo', 'naranja', 'morado'];
         shuffle($colors);
         return array_slice($colors, 0, 4);
     }

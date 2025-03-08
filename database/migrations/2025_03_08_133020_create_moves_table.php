@@ -11,8 +11,8 @@ class CreateMovesTable extends Migration
         Schema::create('moves', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
-            $table->json('code_proposed'); 
-            $table->json('result');        
+            $table->json('guessed_colors'); 
+            $table->json('evaluation');        
             $table->timestamps();
         });
     }

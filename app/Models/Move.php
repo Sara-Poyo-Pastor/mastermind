@@ -10,12 +10,12 @@ class Move extends Model
     use HasFactory;
 
     protected $fillable = [
-        'game_id', 'code_proposed', 'result'
+        'game_id', 'guessed_colors', 'evaluation'
     ];
 
     protected $casts = [
-        'code_proposed' => 'array',
-        'result' => 'array'
+        'guessed_colors' => 'array',
+        'evaluation' => 'array',
     ];
 
     public function game()

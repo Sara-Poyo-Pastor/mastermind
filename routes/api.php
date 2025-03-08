@@ -9,20 +9,20 @@ use App\Http\Controllers\Api\MoveController;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Aquí es donde puedes registrar rutas de API para tu aplicación. Estas
-| rutas son cargadas por el RouteServiceProvider dentro de un grupo que
-| tiene asignado el middleware "api". ¡Disfruta construyendo tu API!
+| Aquí se registran las rutas de API para la aplicación. Estas rutas se
+| cargan a través del RouteServiceProvider con el middleware "api".
 |
 */
 
-// Lista de juegos
+// Lista de partidas en juego
 Route::get('games', [GameController::class, 'index']);
 
-// Detalle de un juego (incluye movimientos)
+// Consulta de los datos de una partida (incluye jugadas realizadas)
 Route::get('games/{id}', [GameController::class, 'show']);
 
-// Creación de un nuevo juego
+// Creación de una nueva partida (recibe opcionalmente un nombre, genera un código secreto y devuelve la partida sin el código)
 Route::post('games', [GameController::class, 'store']);
 
-// Envío de un movimiento para un juego
-Route::post('games/{id}/moves', [MoveController::class, 'store']);
+// Envío de una jugada para una partida (recibe la suposición, evalúa el movimiento y responde con el resultado y el estado de la partida)
+Route::post('games/{gameId}/move', [MoveController::class, 'store']);
+
