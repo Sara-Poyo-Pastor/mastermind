@@ -1,0 +1,258 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Juegos",
+        "description": "Documentación de la API para la gestión de juegos y movimientos",
+        "contact": {
+            "email": "soporte@ejemplo.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/api/games": {
+            "get": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Lista todos los juegos",
+                "operationId": "e333e2e46e6c7bd4c254fe379b7389dd",
+                "responses": {
+                    "200": {
+                        "description": "Lista de juegos obtenida correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Crea un nuevo juego",
+                "operationId": "496a1db2ab2b344c40cad9e98d332d9e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Mi Juego"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Juego creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/games/{id}": {
+            "get": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Obtiene un juego por su ID",
+                "operationId": "48fb06317bf9e8f10c22dd892ff7425e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del juego",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del juego",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Juego no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/games/{gameId}/moves": {
+            "post": {
+                "tags": [
+                    "Moves"
+                ],
+                "summary": "Realiza un movimiento en el juego",
+                "operationId": "61bfb836dc2471626c8a85623a489a5f",
+                "parameters": [
+                    {
+                        "name": "gameId",
+                        "in": "path",
+                        "description": "ID del juego",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "rojo",
+                                            "azul",
+                                            "verde",
+                                            "amarillo"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Movimiento registrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "move": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "game_id": {
+                                                    "type": "integer"
+                                                },
+                                                "guessed_colors": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "evaluation": {
+                                                    "properties": {
+                                                        "exact": {
+                                                            "type": "integer"
+                                                        },
+                                                        "partial": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "game_status": {
+                                            "type": "string"
+                                        },
+                                        "moves_remaining": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en la jugada (colores repetidos o el juego ya ha terminado)"
+                    },
+                    "404": {
+                        "description": "Juego no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Games",
+            "description": "Games"
+        },
+        {
+            "name": "Moves",
+            "description": "Moves"
+        }
+    ]
+}

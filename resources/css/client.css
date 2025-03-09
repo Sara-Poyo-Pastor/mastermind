@@ -1,0 +1,78 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+input[type="text"],
+input[type="number"],
+button {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #AFDDE4;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #746E98;
+    color: #fff;
+}
+
+.result {
+    background: linear-gradient(135deg, #a5cad798 , #91a5bea8);
+    border-left: 5px solid #746E98;
+    padding: 1rem 1.5rem;
+    margin-top: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+}
+
+
+  /* Responsive */
+@media (max-width: 600px) {
+    .container {
+    padding: 1rem;
+}
+}

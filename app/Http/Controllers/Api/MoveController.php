@@ -6,14 +6,64 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\Move;
+use OpenApi\Annotations as OA;
+
 
 class MoveController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/games/{gameId}/moves",
+     *     summary="Realiza un movimiento en el juego",
+     *     tags={"Moves"},
+     *     @OA\Parameter(
+     *         name="gameId",
+     *         in="path",
+     *         required=true,
+     *         description="ID del juego",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="code", type="array", @OA\Items(type="string"), example={"rojo", "azul", "verde", "amarillo"})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Movimiento registrado exitosamente",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="move", type="object",
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="game_id", type="integer"),
+     *                 @OA\Property(property="guessed_colors", type="array", @OA\Items(type="string")),
+     *                 @OA\Property(property="evaluation", type="object",
+     *                     @OA\Property(property="exact", type="integer"),
+     *                     @OA\Property(property="partial", type="integer")
+     *                 ),
+     *                 @OA\Property(property="created_at", type="string", format="date-time")
+     *             ),
+     *             @OA\Property(property="game_status", type="string"),
+     *             @OA\Property(property="moves_remaining", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Error en la jugada (colores repetidos o el juego ya ha terminado)"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Juego no encontrado"
+     *     )
+     * )
+     */
     public function store(Request $request, $gameId)
     {
         $game = Game::findOrFail($gameId);
 
-        if ($game->status !== 'in_progress') {
+        if ($game->status !== 'jugando...') {
             return response()->json(['error' => 'El juego ya ha finalizado'], 400);
         }
 
@@ -40,9 +90,9 @@ class MoveController extends Controller
         $movesCount = Move::where('game_id', $game->id)->count();
 
         if ($evaluation['exact'] == 4) {
-            $game->status = 'victory';
+            $game->status = 'Has ganado!';
         } elseif ($movesCount >= 10) {
-            $game->status = 'defeat';
+            $game->status = 'Oh no! Has perdido :(';
         }
         $game->save();
 
@@ -74,3 +124,4 @@ class MoveController extends Controller
         return ['exact' => $exact, 'partial' => $partial];
     }
 }
+
