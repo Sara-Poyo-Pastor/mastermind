@@ -19,7 +19,7 @@ class MoveController extends Controller
 
         $data = $request->validate([
             'code' => 'required|array|size:4',
-            'code.*' => 'required|string|in:red,blue,green,yellow,orange,purple,rojo,azul,verde,amarillo,naranja,morado'
+            'code.*' => 'required|string|in:rojo,azul,verde,amarillo,naranja,morado'
         ]);
 
         $codeProposed = $data['code'];
@@ -30,7 +30,7 @@ class MoveController extends Controller
 
         $evaluation = $this->evaluateGuess($game->code, $codeProposed);
 
-        // Convierte los arrays a JSON manualmente, ya que MySQL usa longtext (no nativo JSON)
+        // Convierte array a JSON manualmente, porque MySQL usa longtext (no nativo JSON)
         $move = Move::create([
             'game_id'       => $game->id,
             'guessed_colors'=> json_encode($codeProposed),
@@ -58,7 +58,6 @@ class MoveController extends Controller
             'moves_remaining' => max(0, 10 - $movesCount)
         ], 201);
     }
-
 
     // 'exact'   => número de colores en la posición correcta,
     // 'partial' => número de colores correctos pero en posición incorrecta.
