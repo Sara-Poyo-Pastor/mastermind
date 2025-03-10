@@ -20,6 +20,8 @@
    `php artisan test`
 6. Inicia el servidor de desarrollo:  
    `php artisan serve`
+7. Inicia el servidor para cliente:
+   `npm run dev`   
 
 La aplicación estará disponible en [http://127.0.0.1:8000](http://localhost:8000).
 
@@ -28,6 +30,7 @@ La aplicación estará disponible en [http://127.0.0.1:8000](http://localhost:80
 
 Esta API permite gestionar partidas y jugadas para el juego Mastermind.
 Se adjunta un documento en formato json (Mastermind-API.postman_collection.json) con la documentación completa de la API.
+A su vez, se ha implementado Swagger como otra manera alternativa para documentar la API. Se puede acceder a ella a través de http://localhost:8000/documentacion
 
 ## Endpoints Principales
 
