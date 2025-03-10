@@ -2,7 +2,7 @@
 
 ## Requisitos Previos
 
-- **Servidor Web:** Apache  
+- **Servidor Web:** MySQL  
 - **Sistema Operativo:** Windows (o similar)  
 - **PHP:** Versión 8.x (preferiblemente 8.1 o superior)  
 - **Base de Datos:** MySQL  
