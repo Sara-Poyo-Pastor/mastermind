@@ -40,12 +40,35 @@
     
     <!-- Sección para Enviar Movimiento -->
     <section id="play-move">
+  <h2>Enviar Movimiento</h2>
+  <input type="number" id="play-game-id" placeholder="ID de la partida">
+  
+  <!-- Contenedor para seleccionar colores -->
+  <div id="color-selector">
+    <button type="button" class="color-btn" data-color="rojo" style="background-color: #ff6961;"></button>
+    <button type="button" class="color-btn" data-color="azul" style="background-color: #84b6f4;"></button>
+    <button type="button" class="color-btn" data-color="verde" style="background-color: #77dd77;"></button>
+    <button type="button" class="color-btn" data-color="amarillo" style="background-color: #fdfd96;"></button>
+    <button type="button" class="color-btn" data-color="naranja" style="background-color: #ffca99;"></button>
+    <button type="button" class="color-btn" data-color="morado" style="background-color: #bc98f3;"></button>
+  </div>
+  
+  <!-- Mostrar los colores seleccionados -->
+  <p id="selected-colors">Colores seleccionados: </p>
+  
+  <!-- Botón para enviar la jugada -->
+  <button id="play-move-btn">Enviar Movimiento</button>
+  
+  <div id="play-move-result" class="result"></div>
+</section>
+
+    <!-- <section id="play-move">
       <h2>Enviar Movimiento</h2>
       <input type="number" id="play-game-id" placeholder="ID de la partida">
       <input type="text" id="move-code" placeholder="Colores (ej. rojo, azul, verde, amarillo)">
       <button id="play-move-btn">Enviar Movimiento</button>
       <div id="play-move-result" class="result"></div>
-    </section>
+    </section> -->
   </div>
 </body>
 </html>
