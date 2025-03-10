@@ -52,11 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return html;
   }
 
-  /**
-   * Formatea la lista de partidas de forma legible.
-   * @param {array} games - Array de partidas.
-   * @returns {string} HTML formateado.
-   */
+  // Formatea la lista de partidas de forma legible.
+  
   function formatGamesList(games) {
     if (!Array.isArray(games)) {
       return `<p>Error: datos inválidos.</p>`;
@@ -179,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Enviar Movimiento
   document.getElementById('play-move-btn').addEventListener('click', function(){
     const gameId = document.getElementById('play-game-id').value;
-    // Usamos el arreglo de colores seleccionados
+  
     if (selectedColors.length !== 4) {
       alert("Por favor, selecciona 4 colores.");
       return;
@@ -194,14 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const formatted = formatMoveResult(result.data, result.status);
       document.getElementById('play-move-result').innerHTML = formatted;
       
-      // Mostrar modal personalizado si el juego ha terminado
-      if(result.data.game_status === 'victory'){
-        showModal("¡Felicidades!", "Has ganado la partida.");
-      } else if(result.data.game_status === 'defeat'){
-        showModal("¡Oh no!", "Has perdido la partida.");
-      }
-      
-      // Resetear la selección
+     
       selectedColors = [];
       document.getElementById('selected-colors').innerText = "Colores seleccionados: ";
       colorButtons.forEach(btn => btn.classList.remove('selected'));
